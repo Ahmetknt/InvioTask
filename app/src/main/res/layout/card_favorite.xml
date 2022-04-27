@@ -18,7 +18,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/favoriImage"
+                android:id="@+id/imageView"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -39,7 +39,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/starButton"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/favoriImage"
+                app:layout_constraintStart_toEndOf="@+id/imageView"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
@@ -52,7 +52,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/nameText"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/star_off" />
+                app:srcCompat="@drawable/star" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

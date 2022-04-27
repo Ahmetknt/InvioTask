@@ -1,6 +1,6 @@
 package com.ahmetkanat.cat.service
 
-import com.ahmetkanat.catapp.model.Cat
+import com.ahmetkanat.cat.model.Cat
 import io.reactivex.Single
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory

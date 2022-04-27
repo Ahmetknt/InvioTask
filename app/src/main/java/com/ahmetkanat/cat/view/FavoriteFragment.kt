@@ -6,11 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ahmetkanat.cat.R
 import com.ahmetkanat.cat.adapter.CatAdapter
 import com.ahmetkanat.cat.adapter.FavoriteAdapter
+import com.ahmetkanat.cat.model.Cat
 import com.ahmetkanat.cat.viewmodel.CatViewModel
 import com.ahmetkanat.cat.viewmodel.FavoriteViewModel
 import com.ahmetkanat.cat.viewmodel.FeedViewModel
@@ -23,6 +25,7 @@ class FavoriteFragment : Fragment() {
 
     private lateinit var viewModel : FavoriteViewModel
     private val adapter = FavoriteAdapter(arrayListOf())
+    private var catList : ArrayList<Cat>? = null
     private var favoriCatId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,13 +48,13 @@ class FavoriteFragment : Fragment() {
             favoriCatId = FavoriteFragmentArgs.fromBundle(it).favoriCatID
         }
 
-        viewModel = ViewModelProviders.of(this).get(FavoriteViewModel::class.java)
-        viewModel.getDataFromRoom()
+        viewModel = ViewModelProvider(this).get(FavoriteViewModel::class.java)
+        viewModel.getDataFromRoom(favoriCatId)
 
         RV_favorite.layoutManager = LinearLayoutManager(context)
         RV_favorite.adapter = adapter
 
-
+        catList = arrayListOf()
         observeLiveData()
 
     }
@@ -60,7 +63,9 @@ class FavoriteFragment : Fragment() {
         viewModel.catLiveData.observe(viewLifecycleOwner, Observer { cat ->
             cat?.let {
                 RV_favorite.visibility = View.VISIBLE
-                adapter.updateCatList(cat)
+                catList!!.clear()
+                catList!!.add(cat)
+                adapter.updateCatList(catList!!)
             }
 
         })

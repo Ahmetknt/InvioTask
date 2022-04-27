@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.ahmetkanat.cat.R
 import com.ahmetkanat.cat.util.downloadFromUrl
@@ -37,23 +38,28 @@ class CatFragment : Fragment() {
             catUUID = CatFragmentArgs.fromBundle(it).catUUID
         }
 
-        viewModel = ViewModelProviders.of(this).get(CatViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(CatViewModel::class.java)
         viewModel.getDataFromRoom(catUUID)
 
 
         observeLiveData()
     }
     private fun observeLiveData(){
+
+
         viewModel.catLiveData.observe(viewLifecycleOwner, Observer { cat ->
             cat?.let {
+
+                val url = "https://cdn2.thecatapi.com/images/${cat.reference_image_id}.jpg"
+
                 descriptionText.text = cat.description
                 originText.text = cat.origin
                 lifespanText.text = cat.life_span
                 countrycodeText.text = cat.country_code
                 dogFriendlyText.text = cat.dog_friendly.toString()
-                /*context?.let {
-                    imageViewDetay.downloadFromUrl(cat.image.url, placeholderProgressBar(it))
-                }*/
+                context?.let {
+                    imageViewDetay.downloadFromUrl(url, placeholderProgressBar(it))
+                }
 
             }
         })

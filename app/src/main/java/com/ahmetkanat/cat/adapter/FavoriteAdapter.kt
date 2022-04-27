@@ -8,14 +8,12 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.ahmetkanat.cat.R
 import com.ahmetkanat.cat.databinding.CardFavoriteBinding
+import com.ahmetkanat.cat.view.FavoriteFragmentDirections
+import com.ahmetkanat.cat.model.Cat
 import com.ahmetkanat.cat.util.downloadFromUrl
 import com.ahmetkanat.cat.util.placeholderProgressBar
-import com.ahmetkanat.cat.view.FavoriteFragmentDirections
-import com.ahmetkanat.catapp.model.Cat
 
-class FavoriteAdapter(private val catList : ArrayList<Cat>) : RecyclerView.Adapter<FavoriteAdapter.FavoriteHolder>() {
-
-
+class FavoriteAdapter(private var catList : ArrayList<Cat> ) : RecyclerView.Adapter<FavoriteAdapter.FavoriteHolder>() {
 
     inner class FavoriteHolder(val favoriteBinding: CardFavoriteBinding) : RecyclerView.ViewHolder(favoriteBinding.root){
 
@@ -30,11 +28,11 @@ class FavoriteAdapter(private val catList : ArrayList<Cat>) : RecyclerView.Adapt
     override fun onBindViewHolder(holder: FavoriteHolder, position: Int) {
         val context = holder.itemView.context
         val cat = catList[position]
-        //val url = cat.image.url
+        val url = "https://cdn2.thecatapi.com/images/${cat.reference_image_id}.jpg"
 
         holder.favoriteBinding.apply {
             nameText.text = cat.name
-            //favoriImage.downloadFromUrl(url, placeholderProgressBar(holder.itemView.context))
+            imageView.downloadFromUrl(url, placeholderProgressBar(context))
         }
         holder.favoriteBinding.cardView.setOnClickListener {
             val action = FavoriteFragmentDirections.actionFavoriteFragmentToCatFragment(cat.uuid)
@@ -64,7 +62,7 @@ class FavoriteAdapter(private val catList : ArrayList<Cat>) : RecyclerView.Adapt
         return catList.size
     }
     @SuppressLint("NotifyDataSetChanged")
-    fun updateCatList(newCatList : List<Cat>){
+    fun updateCatList(newCatList : ArrayList<Cat>){
         catList.clear()
         catList.addAll(newCatList)
         notifyDataSetChanged()

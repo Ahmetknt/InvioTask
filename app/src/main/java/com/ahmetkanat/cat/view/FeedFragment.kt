@@ -1,15 +1,10 @@
 package com.ahmetkanat.cat.view
 
 import android.annotation.SuppressLint
-import android.app.Application
-import android.content.Context
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.appcompat.widget.SearchView
-import androidx.core.content.ContextCompat
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import androidx.lifecycle.Observer
@@ -18,8 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ahmetkanat.cat.R
 import com.ahmetkanat.cat.adapter.CatAdapter
 import com.ahmetkanat.cat.viewmodel.FeedViewModel
-import com.ahmetkanat.catapp.model.Cat
-import com.bumptech.glide.load.model.stream.MediaStoreImageThumbLoader
+import com.ahmetkanat.cat.model.Cat
+import kotlinx.android.synthetic.main.card_tasarim.*
 import kotlinx.android.synthetic.main.fragment_feed.*
 import java.util.*
 
@@ -47,7 +42,7 @@ class FeedFragment() : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this).get(FeedViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(FeedViewModel::class.java)
         viewModel.refreshData()
 
         rvFeed.layoutManager = LinearLayoutManager(context)
@@ -70,11 +65,14 @@ class FeedFragment() : Fragment() {
     }
 
     private fun observeLiveData(){
-        viewModel.cat.observe(viewLifecycleOwner, Observer { cat ->
+        viewModel.catList.observe(viewLifecycleOwner, Observer { cat ->
             cat?.let {
+                Log.e("dsa","${cat}")
                 rvFeed.visibility = View.VISIBLE
+                Log.e("dsa","dsa")
                 adapter.updateCatList(cat)
             }
+
 
         })
 
@@ -101,6 +99,7 @@ class FeedFragment() : Fragment() {
             }
 
         })
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -121,16 +120,16 @@ class FeedFragment() : Fragment() {
                     if(newText!!.isNotEmpty()){
                         displayList.clear()
                         val search = newText.toLowerCase(Locale.getDefault())
-                        viewModel.cat.value?.forEach {
-                            if(it.name.toLowerCase(Locale.getDefault()).contains(search)){
+                        viewModel.catList.value?.forEach {
+                            if(it.name!!.toLowerCase(Locale.getDefault()).contains(search)){
                                 displayList.add(it)
-                                Log.e("x",displayList[0].name)
+                                displayList[0].name?.let { it1 -> Log.e("x", it1) }
                             }
                         }
                         adapter.updateCatList(displayList)
                     }else{
                         displayList.clear()
-                        viewModel.cat.value?.let { displayList.addAll(it) }
+                        viewModel.catList.value?.let { displayList.addAll(it) }
                         adapter.updateCatList(displayList)
                     }
                     return true

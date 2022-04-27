@@ -4,7 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.ahmetkanat.catapp.model.Cat
+import com.ahmetkanat.cat.model.Cat
+
 
 @Database(entities = arrayOf(Cat::class), version = 1)
 abstract class CatDatabase : RoomDatabase() {

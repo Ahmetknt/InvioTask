@@ -2,10 +2,8 @@ package com.ahmetkanat.cat.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.ahmetkanat.cat.service.CatDatabase
-import com.ahmetkanat.catapp.model.Cat
-import com.ahmetkanat.catapp.model.Image
+import com.ahmetkanat.cat.model.Cat
 import kotlinx.coroutines.launch
 
 class CatViewModel(application: Application) : BaseViewModel(application) {

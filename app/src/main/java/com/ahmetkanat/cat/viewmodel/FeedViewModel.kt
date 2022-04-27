@@ -3,7 +3,7 @@ package com.ahmetkanat.cat.viewmodel
 import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
-import com.ahmetkanat.catapp.model.Cat
+import com.ahmetkanat.cat.model.Cat
 import com.ahmetkanat.cat.service.CatAPIService
 import com.ahmetkanat.cat.service.CatDatabase
 import com.ahmetkanat.cat.util.CustomSharedPreferences
@@ -19,9 +19,10 @@ class FeedViewModel(application: Application) : BaseViewModel(application) {
     private var customPreferences = CustomSharedPreferences(getApplication())
     private var refreshTime = 10 * 60 * 1000 * 1000 * 1000L
 
-    val cat = MutableLiveData<List<Cat>>()
+    val catList = MutableLiveData<List<Cat>>()
     val catError = MutableLiveData<Boolean>()
     val catLoading = MutableLiveData<Boolean>()
+
 
     fun refreshData(){
         catLoading.value = true
@@ -66,8 +67,8 @@ class FeedViewModel(application: Application) : BaseViewModel(application) {
         )
 
     }
-    private fun showCat(catList : List<Cat>){
-        cat.value = catList
+    private fun showCat(cats : List<Cat>){
+        catList.value = cats
         catError.value = false
         catLoading.value = false
     }

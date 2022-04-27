@@ -3,7 +3,7 @@ package com.ahmetkanat.cat.service
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.ahmetkanat.catapp.model.Cat
+import com.ahmetkanat.cat.model.Cat
 
 @Dao
 interface CatDAO {
@@ -22,6 +22,8 @@ interface CatDAO {
 
     /*@Query("DELETE FROM Cat WHERE uuid=:catId")
     suspend fun deleteCat(catId: Int) : Cat*/
+
+
 
 
 }
